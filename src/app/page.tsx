@@ -26,7 +26,8 @@ export default function Home() {
 
   const sendMessage = useCallback(async () => {
     const res = await fetch(
-      `https://corsproxy.io/?${encodeURIComponent(`https://app.wordware.ai/api/prompt/${process.env.NEXT_PUBLIC_WORDWARE_PROMPT_ID}/run`)}`, 
+      // `https://corsproxy.io/?${encodeURIComponent(`https://app.wordware.ai/api/prompt/${process.env.NEXT_PUBLIC_WORDWARE_PROMPT_ID}`)}`, 
+      `https://app.wordware.ai/api/prompt/${process.env.NEXT_PUBLIC_WORDWARE_PROMPT_ID}`,
       {
         method: "POST",
         headers: {
