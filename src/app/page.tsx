@@ -13,13 +13,12 @@ interface Message {
 }
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [query, setQuery] = useState("");
 
   const [username, setUsername] = useState("");
   const [tempUn, setTempUn] = useState("");
-
 
   const [windowSize, setWindowSize] = useState({
     width: 0,
@@ -73,6 +72,7 @@ export default function Home() {
 
   const confirmUsername = useCallback(() => {
     setUsername(tempUn);
+    localStorage.setItem("username", tempUn);
   }, [tempUn])
 
   useEffect(() => {
@@ -103,9 +103,16 @@ export default function Home() {
     }
   }, [windowSize, formRef, msgRef]);
 
+  useEffect(() => {
+    const un = localStorage.getItem("username");
+
+    setUsername(un ?? "");
+    setLoading(false);
+  }, [])
+
   return (
     <div className="h-full">
-      <Dialog open={username === ""}>
+      <Dialog open={!loading && username === ""}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Welcome to Memski!</DialogTitle>
