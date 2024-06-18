@@ -96,8 +96,8 @@ export default function Home() {
 
   return (
     <div className="h-full">
-      <div ref={msgRef} className="fixed top-4 h-full w-full flex flex-col justify-between pb-2 px-1 space-y-2">
-        <ScrollArea className="h-full w-full sm:w-[728px] mx-auto">
+      <div ref={msgRef} className="fixed top-4 h-full w-full pb-2">
+        <ScrollArea className="h-full w-full sm:w-[728px] sm:mx-auto px-2">
           <div className="flex flex-col w-full space-y-2 h-full">
             {messages.map((msg, i) => (
               <div key={i} className={`${msg.role === "user" ? "self-end bg-gray-300/50 rounded-3xl px-3 py-2 max-w-lg" : "self-start"}`}>
@@ -109,12 +109,12 @@ export default function Home() {
           </div>
           <div ref={scrollRef} className="hidden" />
         </ScrollArea>
-        <div className="fixed bottom-2 w-full">
-          <form ref={formRef} className="w-full sm:w-[728px] mx-auto flex flex-row space-x-2 px-1" onSubmit={(e) => { e.preventDefault(); sendMessage(); }}>
-            <Input placeholder="Say something" value={query} onChange={({ target: { value }}) => setQuery(value) } />
-            <Button type="submit" disabled={loading}>Send</Button>
-          </form>
-        </div>
+      </div>
+      <div className="fixed bottom-2 w-full">
+        <form ref={formRef} className="w-full sm:w-[728px] mx-auto flex flex-row space-x-2 px-2" onSubmit={(e) => { e.preventDefault(); sendMessage(); }}>
+          <Input placeholder="Say something" value={query} onChange={({ target: { value }}) => setQuery(value) } />
+          <Button type="submit" disabled={loading}>Send</Button>
+        </form>
       </div>
     </div>
   );
