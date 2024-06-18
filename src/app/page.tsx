@@ -16,16 +16,21 @@ export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [query, setQuery] = useState("");
 
+  const [windowSize, setWindowSize] = useState({
+    width: 0,
+    height: 0,
+  });
+
   const scrollRef = useRef<HTMLDivElement>(null);
+  const msgRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const supabase = useMemo(() => {
-    // console.log(Cookie.)
     return createBrowserClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     );
   }, []);
-
 
   const sendMessage = useCallback(async () => {
     setLoading(true);
@@ -62,11 +67,36 @@ export default function Home() {
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView();
-  }, [messages])
+  }, [messages]);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+    
+    window.addEventListener("resize", handleResize);
+    
+    handleResize();
+    
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (windowSize.height && formRef.current) {
+      const formHeight = formRef.current.offsetHeight;
+      console.log(formHeight, windowSize.height)
+      if (msgRef.current) {
+        msgRef.current.style.height = `${windowSize.height - formHeight - 26}px`;
+      }
+    }
+  }, [windowSize, formRef, msgRef]);
 
   return (
-    <div>
-      <div className="h-screen w-full sm:w-[728px] mx-auto flex flex-col justify-between py-4 space-y-2">
+    <div className="h-full">
+      <div ref={msgRef} className="h-full w-full sm:w-[728px] mx-auto flex flex-col justify-between pt-4 pb-2 px-1 space-y-2">
         <ScrollArea className="h-full">
           <div className="flex flex-col w-full space-y-2 h-full">
             {messages.map((msg, i) => (
@@ -79,7 +109,7 @@ export default function Home() {
           </div>
           <div ref={scrollRef} className="hidden" />
         </ScrollArea>
-        <form className="flex flex-row space-x-2" onSubmit={(e) => { e.preventDefault(); sendMessage(); }}>
+        <form ref={formRef} className="w-full sm:w-[728px] fixed bottom-2 flex flex-row space-x-2" onSubmit={(e) => { e.preventDefault(); sendMessage(); }}>
           <Input placeholder="Say something" value={query} onChange={({ target: { value }}) => setQuery(value) } />
           <Button type="submit" disabled={loading}>Send</Button>
         </form>

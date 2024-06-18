@@ -74,3 +74,18 @@
       @apply bg-background text-foreground;
     }
   }
+
+  #messages {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+    height: calc(100vh - var(--input-height, 50px));
+  }
+  
+  #input {
+    position: fixed;
+    bottom: 12px;
+    /* width: 100%; */
+    height: auto;
+  }
