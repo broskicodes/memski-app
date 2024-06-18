@@ -1,6 +1,5 @@
 "use client"
 
-import { Textarea } from "@/components/ui/textarea";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createBrowserClient } from "@supabase/ssr";
 import { Button } from "@/components/ui/button";
@@ -69,18 +68,19 @@ export default function Home() {
     <div>
       <div className="h-screen w-full sm:w-[728px] mx-auto flex flex-col justify-between py-4 space-y-2">
         <ScrollArea className="h-full">
-          <div className="flex flex-col w-full space-y-2">
+          <div className="flex flex-col w-full space-y-2 h-full">
             {messages.map((msg, i) => (
               <div key={i} className={`${msg.role === "user" ? "self-end bg-gray-300/50 rounded-3xl px-3 py-2 max-w-lg" : "self-start"}`}>
-                {msg.role === "assistant" && <span className="font-semibold text-lg">memski: </span>}
+                {msg.role === "assistant" && <span className="font-semibold text-lg">Memski: </span>}
                 <span>{msg.content}</span>
               </div>
             ))}
+            {messages.length === 0 && <div className="h-full text-4xl font-bold m-auto">Say Hello to Memski!</div>}
           </div>
           <div ref={scrollRef} className="hidden" />
         </ScrollArea>
         <form className="flex flex-row space-x-2" onSubmit={(e) => { e.preventDefault(); sendMessage(); }}>
-          <Input value={query} onChange={({ target: { value }}) => setQuery(value) } />
+          <Input placeholder="Say something" value={query} onChange={({ target: { value }}) => setQuery(value) } />
           <Button type="submit" disabled={loading}>Send</Button>
         </form>
       </div>
