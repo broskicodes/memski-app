@@ -1,7 +1,7 @@
 export const runtime = "edge";
 
 export const POST = async (req: Request) => {
-  const { query, messages } = await req.json();
+  const { query, messages, userId } = await req.json();
 
   const res = await fetch(
     `https://app.wordware.ai/api/prompt/${process.env.NEXT_PUBLIC_WORDWARE_PROMPT_ID}/run`,
@@ -12,7 +12,7 @@ export const POST = async (req: Request) => {
       },
       body: JSON.stringify({
         inputs: {
-          user_id: "braeden",
+          user_id: userId,
           query: query,
           messages: messages
         }

@@ -5,6 +5,7 @@ import { createBrowserClient } from "@supabase/ssr";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface Message {
   role: "user" | "assistant",
@@ -15,6 +16,10 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [query, setQuery] = useState("");
+
+  const [username, setUsername] = useState("");
+  const [tempUn, setTempUn] = useState("");
+
 
   const [windowSize, setWindowSize] = useState({
     width: 0,
@@ -49,6 +54,7 @@ export default function Home() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          userId: username,
           query: query,
           messages: JSON.stringify(oldMessages)
         })
@@ -64,6 +70,10 @@ export default function Home() {
     ]);
     setLoading(false);
   }, [supabase, query, messages]);
+
+  const confirmUsername = useCallback(() => {
+    setUsername(tempUn);
+  }, [tempUn])
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView();
@@ -89,13 +99,24 @@ export default function Home() {
       const formHeight = formRef.current.offsetHeight;
       if (msgRef.current) {
         msgRef.current.style.height = `${windowSize.height - formHeight - 26}px`;
-        console.log(formHeight, msgRef.current.style.height)
       }
     }
   }, [windowSize, formRef, msgRef]);
 
   return (
     <div className="h-full">
+      <Dialog open={username === ""}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Welcome to Memski!</DialogTitle>
+            <DialogDescription>{"Enter a unique username to help us remember you :)"}</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={(e) => { e.preventDefault(); confirmUsername() }} className="flex flex-row space-x-2">
+            <Input placeholder="Username" value={tempUn} onChange={({ target: { value }}) => setTempUn(value)} />
+            <Button type="submit">Confirm</Button>
+          </form>
+        </DialogContent>
+      </Dialog>
       <div ref={msgRef} className="fixed top-4 h-full w-full pb-2">
         <ScrollArea className="h-full w-full sm:w-[728px] sm:mx-auto px-2">
           <div className="flex flex-col w-full space-y-2 h-full">
