@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { NdJsonStream, OutputType, StreamToIterable } from "../utils/stream";
 
 interface Message {
   role: "user" | "assistant",
@@ -16,6 +17,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [query, setQuery] = useState("");
+  // const [stage, setStage] = useState("");
 
   const [username, setUsername] = useState("");
   const [tempUn, setTempUn] = useState("");
@@ -60,13 +62,45 @@ export default function Home() {
       }
     );
 
-    const response = await res.text();
+    if (res.status !== 200) {
+      // setError("Something went wrong, please try again");
+      return;
+    }
 
-    setMessages([
-      ...oldMessages, 
-      { role: "user", content: newQuery },
-      { role: "assistant", content: response }
-    ]);
+    const stream = NdJsonStream.decode(res.body!);
+
+    let response: string = "";
+    let lastGeneration: string = "";
+
+    for await (const chunk of StreamToIterable(stream)) {
+      if (chunk.type === "chunk") {
+        const value = chunk.value as OutputType;
+
+        if (value.type === "generation") {
+          if (value.state === "start") {
+            console.log("\nNEW GENERATION -", value.label);
+            lastGeneration = value.label;
+          } else {
+            console.log("\nEND GENERATION -", value.label);
+          }
+        } else if (value.type === "chunk") {
+          if (lastGeneration === "response") {
+            response += value.value;
+            setMessages([
+              ...oldMessages, 
+              { role: "user", content: newQuery },
+              { role: "assistant", content: response }
+            ]);
+          }
+        } else if (value.type === "outputs") {
+          // response = value.values.response;
+          // console.log(value.values.response);
+        }
+      }
+    }
+
+    // const response = await res.text();
+
     setLoading(false);
   }, [supabase, query, messages]);
 
