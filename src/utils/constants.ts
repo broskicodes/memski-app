@@ -1,0 +1,1 @@
+export const CAL_LINK = "https://calendly.com/braeden-brhall/memski"
