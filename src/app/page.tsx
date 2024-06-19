@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { NdJsonStream, OutputType, StreamToIterable } from "../utils/stream";
+import posthog from "posthog-js";
 
 interface Message {
   role: "user" | "assistant",
@@ -40,6 +41,7 @@ export default function Home() {
 
   const sendMessage = useCallback(async () => {
     setLoading(true);
+    posthog.capture("message_sent");
 
     const newQuery = query;
     setQuery("");
@@ -105,6 +107,11 @@ export default function Home() {
   }, [supabase, query, messages]);
 
   const confirmUsername = useCallback(() => {
+    posthog.identify(tempUn, {
+      id: tempUn,
+      username: tempUn,
+    });
+
     setUsername(tempUn);
     localStorage.setItem("username", tempUn);
   }, [tempUn])
@@ -142,6 +149,13 @@ export default function Home() {
 
     setUsername(un ?? "");
     setLoading(false);
+
+    if (un) {
+      posthog.identify(un, {
+        id: un,
+        username: un,
+      });
+    }
   }, [])
 
   return (
