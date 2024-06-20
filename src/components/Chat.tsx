@@ -5,7 +5,7 @@ import { createBrowserClient } from "@supabase/ssr";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { NdJsonStream, OutputType, StreamToIterable } from "../utils/stream";
 import posthog from "posthog-js";
 
@@ -186,7 +186,9 @@ export function Chat() {
             </DialogHeader>
             <form onSubmit={(e) => { e.preventDefault(); confirmUsername() }} className="flex flex-row space-x-2">
               <Input placeholder="Username" value={tempUn} onChange={({ target: { value }}) => setTempUn(value)} />
-              <Button type="submit">Confirm</Button>
+              <DialogClose>
+                <Button type="submit">Confirm</Button>
+              </DialogClose>
             </form>
           </DialogContent>
         </Dialog>
