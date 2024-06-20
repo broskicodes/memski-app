@@ -7,6 +7,8 @@ import DotPattern from "@/components/magicui/dot-pattern";
 import HeroSection from "@/components/magicui/hero-section";
 import Particles from "@/components/magicui/particles";
 import PricingSection from "@/components/magicui/pricing-section";
+import { SiteFooter } from "@/components/magicui/site-footer";
+import { SiteHeader } from "@/components/magicui/site-header";
 import { SphereMask } from "@/components/magicui/sphere-mask";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +17,7 @@ export default function Home() {
 
   return (
     <div className="h-full">
+      <SiteHeader />
       <DotPattern
         className={cn(
           "w-full h-full opacity-30",
@@ -36,6 +39,7 @@ export default function Home() {
         staticity={40}
         color={"#000000"}
       /> */}
+      <SiteFooter />
     </div>
   );
 }

@@ -26,9 +26,7 @@ export default function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
-          <SiteHeader />
           <main className="mx-auto flex-1 overflow-hidden">{children}</main>
-          <SiteFooter />
           <Toaster />
         </ThemeProvider>
       </body>
