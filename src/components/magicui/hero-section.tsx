@@ -43,7 +43,7 @@ export default function HeroSection() {
       </h1>
       <p className="mb-12 text-lg tracking-tight text-gray-400 md:text-xl text-balance translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
         Memski learns your preferences and taste in real time as you chat,
-        <br className="hidden md:block" /> so that your responses are perfectly tailoerd to you.
+        <br className="hidden md:block" /> so that your responses are perfectly tailored to you.
       </p>
       <Link href={CAL_LINK} target="_blank" className={cn(`translate-y-[-1rem] animate-fade-in gap-1 rounded-lg text-white dark:text-black opacity-0 ease-in-out [--animation-delay:600ms]`, buttonVariants())}>
         <span>Get Started </span>
