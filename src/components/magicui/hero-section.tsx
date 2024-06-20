@@ -9,6 +9,7 @@ import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
+import { Chat } from "../../components/Chat";
 
 export default function HeroSection() {
   const ref = useRef(null);
@@ -62,22 +63,27 @@ export default function HeroSection() {
             "dark:[background-image:linear-gradient(to_bottom,#ffffff,transparent_30%)]",
           )}
         />
-        <video
-          autoPlay
-          loop
-          muted
-          src="memski-v0-demo.mp4"
-          className="relative block h-full w-full rounded-xl"
-        />
-        {/* <img
-          src="/hero-light.png"
-          className="relative block h-full w-full rounded-xl dark:hidden"
-        />
-        <img
-          src="/hero-dark.png"
-          className="relative hidden h-full w-full rounded-xl dark:block"
-        /> */}
-        <BorderBeam />
+        <div className="p-1 rounded-xl">
+          <div className="relative h-96 w-full bg-white rounded-xl z-10">
+            <Chat />
+          </div>
+          {/* <video
+            autoPlay
+            loop
+            muted
+            src="memski-v0-demo.mp4"
+            className="relative block h-full w-full rounded-xl"
+          /> */}
+          {/* <img
+            src="/hero-light.png"
+            className="relative block h-full w-full rounded-xl dark:hidden"
+          />
+          <img
+            src="/hero-dark.png"
+            className="relative hidden h-full w-full rounded-xl dark:block"
+          /> */}
+          <BorderBeam borderWidth={3} size={200} duration={8}/>
+        </div>
       </div>
       {/* <div
         ref={ref}
