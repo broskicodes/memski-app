@@ -8,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { NdJsonStream, OutputType, StreamToIterable } from "../utils/stream";
 import posthog from "posthog-js";
+import ReactMarkdown from 'react-markdown'
 
 interface Message {
   role: "user" | "assistant",
@@ -196,12 +197,16 @@ export function Chat() {
       </div>
       <div className="h-full row-span-11  w-full pb-2">
         <ScrollArea className="h-full w-full sm:w-[728px] sm:mx-auto px-2">
-          <div className="flex flex-col w-full space-y-2 h-full text-left" >
+          <div className="flex flex-col w-full space-y-3 h-full text-left" >
             {messages.length === 0 && <div className="h-full text-2xl sm:text-4xl font-bold m-auto">Say hello to Memski!</div>}
             {messages.map((msg, i) => (
               <div key={i} className={`${msg.role === "user" ? "self-end bg-gray-300/50 rounded-3xl px-3 py-2 max-w-xs sm:max-w-md" : "self-start"}`}>
-                {msg.role === "assistant" && <span className="font-semibold text-lg">Memski: </span>}
-                <span>{msg.content}</span>
+                {msg.role === "assistant" && (
+                  <ReactMarkdown>
+                    {`__Memski:__ ${msg.content}`}
+                  </ReactMarkdown>
+                )}
+                {msg.role === "user" && <span>{msg.content}</span>}
               </div>
             ))}
             <div ref={scrollRef} className="hidden" />
