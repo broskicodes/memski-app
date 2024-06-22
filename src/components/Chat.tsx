@@ -9,6 +9,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, Di
 import { NdJsonStream, OutputType, StreamToIterable } from "../utils/stream";
 import posthog from "posthog-js";
 import ReactMarkdown from 'react-markdown'
+import { Label } from "./ui/label";
 
 interface Message {
   role: "user" | "assistant",
@@ -176,29 +177,28 @@ export function Chat() {
 
   return (
     <div className="h-full grid grid-rows-12 py-2">
-      <div className="relative">
-        <div className="absolute inset-0">
-        <Dialog>
-          <DialogTrigger ref={triggerRef} />
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Welcome to Memski!</DialogTitle>
-              <DialogDescription>{"Enter a unique username to help us remember you :)"}</DialogDescription>
-            </DialogHeader>
-            <form onSubmit={(e) => { e.preventDefault(); confirmUsername() }} className="flex flex-row space-x-2">
+      <Dialog>
+        <DialogTrigger ref={triggerRef} className="hidden" />
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Welcome to Memski!</DialogTitle>
+            <DialogDescription>{"See how Memski saves details and uses them to enhance prompts."}</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={(e) => { e.preventDefault(); confirmUsername() }} className="flex flex-col space-y-2">
+            <Label>Enter a unique user name</Label>
+            <div className="flex flex-row space-x-2">
               <Input placeholder="Username" value={tempUn} onChange={({ target: { value }}) => setTempUn(value)} />
               <DialogClose>
                 <Button type="submit">Confirm</Button>
               </DialogClose>
-            </form>
-          </DialogContent>
-        </Dialog>
-        </div>
-      </div>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
       <div className="h-full row-span-11  w-full pb-2">
         <ScrollArea className="h-full w-full sm:w-[728px] sm:mx-auto px-2">
           <div className="flex flex-col w-full space-y-3 h-full text-left" >
-            {messages.length === 0 && <div className="h-full text-2xl sm:text-4xl font-bold m-auto">Say hello to Memski!</div>}
+            {messages.length === 0 && <div className="h-full text-2xl sm:text-4xl font-bold mx-auto mt-4">Test its memory!</div>}
             {messages.map((msg, i) => (
               <div key={i} className={`${msg.role === "user" ? "self-end bg-gray-300/50 rounded-3xl px-3 py-2 max-w-xs sm:max-w-md" : "self-start"}`}>
                 {msg.role === "assistant" && (

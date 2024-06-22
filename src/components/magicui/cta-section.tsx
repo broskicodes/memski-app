@@ -7,40 +7,40 @@ import { CAL_LINK } from "@/utils/constants";
 
 const reviews = [
   {
-    name: "Jack",
-    username: "@jack",
-    body: "I've never seen anything like this before. It's amazing. I love it.",
-    img: "https://avatar.vercel.sh/jack",
+    name: "Tregg",
+    username: "@Treggify",
+    body: "Now this. This is interesting.",
+    img: "https://unavatar.io/twitter/Treggify",
   },
   {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
-    img: "https://avatar.vercel.sh/jill",
+    name: "Sean Rich",
+    username: "@TheSeanRich",
+    body: "Love this 🔥",
+    img: "https://unavatar.io/twitter/TheSeanRich",
   },
   {
     name: "John",
     username: "@john",
     body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/john",
+    img: "https://unavatar.io/twitter/john",
   },
   {
-    name: "Jane",
-    username: "@jane",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jane",
+    name: "Digital Doctor",
+    username: "@thedigitaldr",
+    body: "You're cooking.",
+    img: "https://unavatar.io/twitter/thedigitaldr",
   },
   {
-    name: "Jenny",
-    username: "@jenny",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jenny",
+    name: "Mattia",
+    username: "@mattiapomelli",
+    body: "yooo this is cool",
+    img: "https://unavatar.io/twitter/mattiapomelli",
   },
   {
-    name: "James",
-    username: "@james",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/james",
+    name: "Juan",
+    username: "@juanfrank77",
+    body: "This is something that sounds more useful. Keen to see how it develops.",
+    img: "https://unavatar.io/twitter/juanfrank77",
   },
 ];
 
@@ -140,7 +140,7 @@ function CallToActionSection() {
             </div>
             <div className="z-10 mt-4 flex flex-col items-center text-center text-black dark:text-white">
               <h1 className="text-3xl font-bold lg:text-4xl">
-                Stop wasting time prompting.
+                Stop building generic agents.
               </h1>
               <p className="mt-2">
                 Book your 15 min onboarding call now!

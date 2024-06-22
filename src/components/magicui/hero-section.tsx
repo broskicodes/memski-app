@@ -38,19 +38,19 @@ export default function HeroSection() {
         </TextShimmer>
       </div>
       <h1 className="bg-gradient-to-br dark:from-white from-black from-40% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance sm:text-6xl md:text-7xl lg:text-8xl translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
-        An AI that remembers
+        Personalize your LLMs
         {/* <br className="hidden md:block" /> to build landing pages. */}
       </h1>
       <p className="mb-12 text-lg tracking-tight text-gray-400 md:text-xl text-balance translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
-        Memski learns your preferences and taste in real time as you chat,
-        <br className="hidden md:block" /> so that your responses are perfectly tailored to you.
+        Memski enhances prompts with details about your users
+        <br className="hidden md:block" /> so that your LLMs are more specific.
       </p>
       <Link href={CAL_LINK} target="_blank" className={cn(`translate-y-[-1rem] animate-fade-in gap-1 rounded-lg text-white dark:text-black opacity-0 ease-in-out [--animation-delay:600ms]`, buttonVariants())}>
         <span>Get Started </span>
         <ArrowRightIcon className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
       </Link>
       <div
-        className="relative mx-auto mt-24 h-full w-full max-w-[768px] rounded-xl border shadow-2xl"
+        className="relative mx-auto mt-20 h-full w-full max-w-[768px] rounded-xl border shadow-2xl"
       >
         <div
           className={cn(
