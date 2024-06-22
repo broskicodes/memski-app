@@ -181,7 +181,7 @@ export function Chat() {
         <DialogTrigger ref={triggerRef} className="hidden" />
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Welcome to Memski!</DialogTitle>
+            <DialogTitle>Memski Demo</DialogTitle>
             <DialogDescription>{"See how Memski saves details and uses them to enhance prompts."}</DialogDescription>
           </DialogHeader>
           <form onSubmit={(e) => { e.preventDefault(); confirmUsername() }} className="flex flex-col space-y-2">
