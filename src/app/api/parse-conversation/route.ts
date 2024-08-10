@@ -1,6 +1,6 @@
-export const config = {
-  bodyParser: false
-};
+// export const config = {
+//   bodyParser: false
+// };
 
 function extractMessages(conversation: any) {
   const messages: { role: string, content: string }[] = [];
