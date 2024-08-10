@@ -3,8 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/magicui/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import { SiteHeader } from "@/components/magicui/site-header";
-import { SiteFooter } from "@/components/magicui/site-footer";
 
 const inter = Inter({ subsets: ["latin"] });
 

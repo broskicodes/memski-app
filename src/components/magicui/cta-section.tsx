@@ -4,6 +4,7 @@ import Marquee from "@/components/magicui/marquee";
 import { ChevronRight, HeartHandshake } from "lucide-react";
 import Link from "next/link";
 import { CAL_LINK } from "@/utils/constants";
+import posthog from "posthog-js";
 
 const reviews = [
   {
@@ -148,6 +149,7 @@ function CallToActionSection() {
               <Link
                 href={CAL_LINK}
                 target="_blank"
+                onClick={() => { posthog.capture("cal-clicked") }}
                 className={cn(
                   buttonVariants({
                     size: "lg",
@@ -156,7 +158,7 @@ function CallToActionSection() {
                   "group mt-4 rounded-[2rem] px-6",
                 )}
               >
-                Get Started
+                Book a Call
                 <ChevronRight className="ml-1 size-4 transition-all duration-300 ease-out group-hover:translate-x-1" />
               </Link>
             </div>

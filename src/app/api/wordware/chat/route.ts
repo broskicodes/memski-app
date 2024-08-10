@@ -1,10 +1,12 @@
+import { WORDWARE_CHAT_PROMPT_ID } from "@/utils/constants";
+
 export const runtime = "edge";
 
 export const POST = async (req: Request) => {
   const { query, messages, userId } = await req.json();
 
   const res = await fetch(
-    `https://app.wordware.ai/api/prompt/${process.env.NEXT_PUBLIC_WORDWARE_PROMPT_ID}/run`,
+    `https://app.wordware.ai/api/prompt/${WORDWARE_CHAT_PROMPT_ID}/run`,
     {
       method: "POST",
       headers: {
@@ -13,8 +15,8 @@ export const POST = async (req: Request) => {
       body: JSON.stringify({
         inputs: {
           user_id: userId,
-          query: query,
-          messages: messages
+          prompt: query,
+          convo: messages
         }
       })
     }

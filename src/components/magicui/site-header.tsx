@@ -1,12 +1,13 @@
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CAL_LINK } from "@/utils/constants";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlignJustify, ArrowRightIcon, XIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { WlsModal } from "../WlsModal";
 
 const menuItem = [
   {
@@ -105,10 +106,12 @@ export function SiteHeader() {
           </Link>
 
           <div className="ml-auto flex h-full items-center">
-            <Link href={CAL_LINK} target="_blank" className={cn(`translate-y-[-1rem] animate-fade-in gap-1 rounded-lg text-white dark:text-black opacity-0 ease-in-out [--animation-delay:600ms]`, buttonVariants({ variant: "secondary" }))}>
-              <span>Get Started </span>
-              <ArrowRightIcon className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
-            </Link>
+            <WlsModal>
+              <Button className={cn(`translate-y-[-1rem] animate-fade-in gap-1 rounded-lg text-white dark:text-black opacity-0 ease-in-out [--animation-delay:600ms]`, buttonVariants({ variant: "secondary" }))}>
+                <span>Join the Waitlist</span>
+                <ArrowRightIcon className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
+              </Button>
+            </WlsModal>
           </div>
           {/* <button
             className="ml-6 md:hidden"

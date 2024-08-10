@@ -20,6 +20,8 @@ export function Chat() {
   const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [query, setQuery] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [conversations, setConversations] = useState<any[]>([]);
   // const [stage, setStage] = useState("");
 
   const [username, setUsername] = useState("");
@@ -43,6 +45,46 @@ export function Chat() {
     );
   }, []);
 
+  const parseConversation = useCallback(async () => {
+    const formData = new FormData();
+
+    if (file) {
+      formData.append("file", file);
+      const res = await fetch(
+        `/api/parse-conversation`,
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+
+      const messages = await res.json();
+      setConversations(messages);
+    }
+  }, [file]);
+
+  const getMemories = useCallback(async () => {
+    setLoading(true);
+  
+    const res = await fetch(
+      `/api/wordware/memories`,
+      {
+        method: "POST",
+        body: JSON.stringify({ conversations, user_id: username })
+      }
+    );
+
+    if (res.status !== 200) {
+      // setError("Something went wrong, please try again");
+      return;
+    }
+
+    const response = await res.text();
+    console.log(response);
+
+    setLoading(false);
+  }, [conversations]);
+
   const sendMessage = useCallback(async () => {
     setLoading(true);
     posthog.capture("message_sent");
@@ -54,7 +96,7 @@ export function Chat() {
     setMessages([...oldMessages, { role: "user", content: newQuery }])
 
     const res = await fetch(
-      `/api/wordware`,
+      `/api/wordware/chat`,
       {
         method: "POST",
         headers: {
@@ -63,7 +105,7 @@ export function Chat() {
         body: JSON.stringify({
           userId: username,
           query: query,
-          messages: JSON.stringify(oldMessages)
+          messages: JSON.stringify(oldMessages),
         })
       }
     );
@@ -129,6 +171,13 @@ export function Chat() {
   }, [messages, scrollRef]);
 
   useEffect(() => {
+    if (conversations.length > 0) {
+      console.log("getting memories");
+      getMemories();
+    }
+  }, [conversations]);
+
+  useEffect(() => {
     function handleResize() {
       setWindowSize({
         width: window.innerWidth,
@@ -159,7 +208,7 @@ export function Chat() {
 
   useEffect(() => {
     const handleFocus = () => {
-      if (!loading && username === "") {
+      if (!loading && (username === "" || !file)) {
         triggerRef.current?.click();
       }
     };
@@ -186,10 +235,17 @@ export function Chat() {
           </DialogHeader>
           <form onSubmit={(e) => { e.preventDefault(); confirmUsername() }} className="flex flex-col space-y-2">
             <Label>Enter a unique user name</Label>
-            <div className="flex flex-row space-x-2">
+            <div className="flex flex-col space-y-2">
               <Input placeholder="Username" value={tempUn} onChange={({ target: { value }}) => setTempUn(value)} />
-              <DialogClose>
-                <Button type="submit">Confirm</Button>
+              <Label>Upload a conversation file</Label>
+              <Input type="file" accept="application/json" onChange={({ target: { files }}) => {
+                if (files && files.length > 0) {
+                  const file = files[0];
+                  setFile(file);
+                }
+              }} />
+              <DialogClose className="w-full">
+                <Button type="submit" className="w-full" onClick={() => { if (username !== "") parseConversation(); }}>Confirm</Button>
               </DialogClose>
             </div>
           </form>

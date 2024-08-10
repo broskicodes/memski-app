@@ -10,11 +10,16 @@ const PostHogPageView = dynamic(() => import("../components/PosthogPageView"), {
 });
 
 if (typeof window !== "undefined") {
-  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-    capture_pageview: false, // Disable automatic pageview capture, as we capture manually,
-    person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
-  });
+  try {
+    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      capture_pageview: false,
+      person_profiles: 'identified_only',
+    });
+  } catch (error) {
+    console.warn("PostHog initialization failed. Analytics will be disabled.", error);
+    // Implement fallback or disable analytics
+  }
 }
 
 export default function Template({ children }: PropsWithChildren) {
